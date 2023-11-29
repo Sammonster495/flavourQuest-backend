@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("http://localhost:5173")
 @RequestMapping("/menu")
@@ -39,5 +41,24 @@ public class BusinessController {
             System.out.println("not available . Saved : " + foodItem);
         }
         return ResponseEntity.ok(foodItem);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity updateYourEntity(@PathVariable String id, @RequestBody FoodItem newEntityData) {
+        Optional<FoodItem> optionalEntity = foodRepository.findById(id);
+
+        if(optionalEntity.isPresent()) {
+            FoodItem oldEntityData = optionalEntity.get();
+
+            // Here you can set the new values for the fields you want to update
+            oldEntityData.setName(newEntityData.getName());
+            oldEntityData.setPrice(newEntityData.getPrice());
+            oldEntityData.setDesc(newEntityData.getDesc());
+            oldEntityData.setImage(newEntityData.getImage());
+
+            return ResponseEntity.ok(foodRepository.save(oldEntityData));
+        } else {
+            throw new RuntimeException("Entity not found for id "+id);
+        }
     }
 }

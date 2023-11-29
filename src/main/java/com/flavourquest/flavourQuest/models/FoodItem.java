@@ -31,4 +31,36 @@ public class FoodItem {
     private String image;
     @JsonProperty("price")
     private double price;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public double getPrice(){
+        return this.price;
+    }
+
+    public String getDesc(){
+        return this.desc;
+    }
+
+    public String getImage(){
+        return this.image;
+    }
 }
